@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <title>상간 위자료 계산기 - 비밀 보장 무료 진단</title>
+    <meta name="description" content="상간녀/상간남 소송 위자료, 1분 만에 정확히 계산해 보세요. 소멸시효 확인 및 필수 증거 자료 리스트 제공.">
+    <meta name="keywords" content="상간녀위자료계산기, 상간남위자료계산기, 불륜소송, 상간소송증거, 법무법인상담">
+    <meta property="og:title" content="상간 위자료 계산기 | 나의 예상 위자료는?">
+    <meta property="og:description" content="지금 바로 위자료 금액과 승소 가능성을 확인하세요.">
+    <meta property="og:url" content="https://www.hearttest.xyz/">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            --accent-color: #8b5cf6; /* 세련된 퍼플 */
+            --point-color: #f43f5e; /* 강조 핑크 */
+            --glass-bg: rgba(255, 255, 255, 0.05);
+        }
+
+        * {
+            box-sizing: border-box; margin: 0; padding: 0;
+            font-family: 'Pretendard', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            letter-spacing: -0.025em; /* 모바일 자간 최적화 */
+            word-break: keep-all;
+        }
+
+        body { background: var(--bg-gradient); color: #fff; line-height: 1.6; min-height: 100vh; padding-bottom: 90px; }
+        .container { max-width: 480px; margin: 0 auto; padding: 20px; }
+
+        header { text-align: center; padding: 40px 0 20px; }
+        .logo { font-size: 1.6rem; font-weight: 800; color: var(--accent-color); text-transform: uppercase; }
+
+        .card {
+            background: var(--glass-bg); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px; padding: 25px; margin-bottom: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        /* 단계별 애니메이션 */
+        .step { display: none; }
+        .step.active { display: block; animation: slideIn 0.4s ease-out; }
+
+        h2 { font-size: 1.3rem; margin-bottom: 20px; text-align: center; }
+        .btn-list { display: flex; flex-direction: column; gap: 12px; }
+        .btn-opt {
+            padding: 18px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.05); color: #fff; font-size: 1rem;
+            cursor: pointer; transition: all 0.2s; text-align: left;
+        }
+        .btn-opt:active { background: var(--accent-color); transform: scale(0.98); }
+
+        /* 결과 창 */
+        #result-box { display: none; text-align: center; }
+        .price-tag { font-size: 2.8rem; font-weight: 900; color: var(--point-color); margin: 15px 0; }
+
+        /* 하단 고정 메뉴 */
+        .dock-bar {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(15px);
+            display: flex; border-top: 1px solid rgba(255,255,255,0.1); z-index: 1000;
+        }
+        .dock-item {
+            flex: 1; text-align: center; padding: 15px 0; color: #fff;
+            text-decoration: none; font-size: 0.8rem; display: flex; flex-direction: column; align-items: center; gap: 5px;
+        }
+        .dock-item i { font-size: 1.2rem; }
+
+        /* FAQ */
+        .faq-box { background: rgba(0,0,0,0.2); border-radius: 15px; padding: 15px; margin-bottom: 12px; }
+        .faq-q { color: var(--accent-color); font-weight: 700; font-size: 0.95rem; margin-bottom: 5px; }
+        .faq-a { font-size: 0.85rem; color: #cbd5e1; }
+
+        @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* 팝업 */
+        #modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; z-index: 2000; }
+        #modal {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 85%; max-width: 380px; background: #fff; color: #000;
+            border-radius: 20px; padding: 30px; display: none; z-index: 2001; text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">Heart Test</div>
+        <p style="color: #94a3b8; font-size: 0.85rem; margin-top: 5px;">상간자 위자료 소송 비대면 진단</p>
+    </header>
+
+    <section class="card" id="main-card">
+        <div id="q-steps">
+            <div class="step active" data-s="1">
+                <h2>부정행위 기간은?</h2>
+                <div class="btn-list">
+                    <button class="btn-opt
