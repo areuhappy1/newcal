@@ -2,183 +2,673 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>상간 위자료 소송 가이드</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <title>상간 위자료 계산기 - 비밀 보장 무료 진단</title>
+    <meta name="description" content="상간녀/상간남 소송 위자료, 1분 만에 정확히 계산해 보세요. 소멸시효 확인 및 필수 증거 자료 리스트 제공.">
+    <meta name="keywords" content="상간녀위자료계산기, 상간남위자료계산기, 불륜소송, 상간소송증거, 법무법인상담">
+    <meta property="og:title" content="상간 위자료 계산기 | 나의 예상 위자료는?">
+    <meta property="og:description" content="지금 바로 위자료 금액과 승소 가능성을 확인하세요.">
+    <meta property="og:url" content="https://www.hearttest.xyz/">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
     <style>
-        /* 기본 스타일 설정 */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif; line-height: 1.6; color: #333; background-color: #f8f9fa; }
-        a { text-decoration: none; color: inherit; }
-        
-        /* 헤더 네비게이션 */
-        header { background-color: #ffffff; padding: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
-        .nav-container { max-width: 1000px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-weight: bold; font-size: 1.2rem; color: #1a365d; }
-        .nav-links a { margin-left: 20px; font-weight: bold; font-size: 0.9rem; }
+        :root {
+            --bg-start: #061a14;
+            --bg-mid: #0b2e23;
+            --bg-end: #0a1f1a;
+            --accent: #2dd4a8;
+            --accent-dim: #1a9e7a;
+            --accent-glow: rgba(45, 212, 168, 0.15);
+            --point: #f0c040;
+            --glass-bg: rgba(255, 255, 255, 0.04);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --text-primary: #e8f5f0;
+            --text-secondary: #8fb8a8;
+            --text-muted: #5a8a78;
+        }
 
-        /* 공통 섹션 스타일 */
-        section { padding: 60px 20px; max-width: 1000px; margin: 0 auto; }
-        h2 { font-size: 1.8rem; color: #1a365d; margin-bottom: 20px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; }
+        * {
+            box-sizing: border-box; margin: 0; padding: 0;
+            font-family: 'Pretendard', -apple-system, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            letter-spacing: -0.025em;
+            word-break: keep-all;
+        }
 
-        /* 히어로 섹션 (메인) */
-        .hero { background-color: #1a365d; color: white; text-align: center; padding: 80px 20px; }
-        .hero h1 { font-size: 2.5rem; margin-bottom: 15px; }
-        .hero p { font-size: 1.2rem; margin-bottom: 30px; opacity: 0.9; }
-        .btn-primary { background-color: #3182ce; color: white; padding: 15px 30px; border: none; border-radius: 5px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        .btn-primary:hover { background-color: #2b6cb0; }
+        body {
+            background: linear-gradient(160deg, var(--bg-start) 0%, var(--bg-mid) 40%, var(--bg-end) 100%);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding-bottom: 100px;
+            position: relative;
+            overflow-x: hidden;
+        }
 
-        /* 위자료 계산기 섹션 */
-        .calculator-box { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .question { margin-bottom: 20px; }
-        .question p { font-weight: bold; margin-bottom: 10px; }
-        .question label { display: block; margin-bottom: 8px; cursor: pointer; }
-        #calc-result { margin-top: 30px; padding: 20px; background-color: #ebf8ff; border-left: 5px solid #3182ce; font-weight: bold; font-size: 1.2rem; display: none; }
-        .warning-result { background-color: #fff5f5 !important; border-left: 5px solid #e53e3e !important; color: #c53030; }
+        body::before {
+            content: '';
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background:
+                radial-gradient(ellipse 600px 600px at 20% 10%, rgba(45, 212, 168, 0.06) 0%, transparent 70%),
+                radial-gradient(ellipse 500px 500px at 80% 80%, rgba(16, 90, 66, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
 
-        /* FAQ 아코디언 스타일 */
-        details { background: white; margin-bottom: 10px; border-radius: 5px; border: 1px solid #e2e8f0; }
-        summary { padding: 15px; font-weight: bold; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; }
-        summary::-webkit-details-marker { display: none; }
-        summary::after { content: '+'; font-size: 1.5rem; color: #3182ce; }
-        details[open] summary::after { content: '-'; }
-        details p { padding: 15px; border-top: 1px solid #e2e8f0; background-color: #f8f9fa; margin: 0; }
+        .container { max-width: 480px; margin: 0 auto; padding: 20px; position: relative; z-index: 1; }
 
-        /* 정보 테이블 */
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; background: white; }
-        th, td { border: 1px solid #e2e8f0; padding: 15px; text-align: left; }
-        th { background-color: #f1f5f9; color: #1a365d; }
+        /* 헤더 */
+        header { text-align: center; padding: 48px 0 12px; }
+        .logo {
+            font-size: 1.1rem; font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            opacity: 0.85;
+        }
+        .header-title {
+            font-size: 1.55rem; font-weight: 800;
+            color: #fff;
+            margin-top: 14px;
+            line-height: 1.35;
+        }
+        .header-title em {
+            font-style: normal;
+            color: var(--accent);
+        }
+        .header-sub {
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+
+        /* 신뢰도 배지 */
+        .trust-badges {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 20px;
+            padding: 16px 20px;
+            background: rgba(45, 212, 168, 0.06);
+            border: 1px solid rgba(45, 212, 168, 0.12);
+            border-radius: 14px;
+        }
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+        }
+        .trust-badge .check {
+            width: 18px; height: 18px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .trust-badge .check::after {
+            content: '';
+            width: 5px; height: 9px;
+            border: solid #061a14; border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+            margin-top: -1px;
+        }
+
+        /* 카드 */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 28px 22px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+        }
+
+        /* 진행 바 */
+        .progress-wrap {
+            display: flex; align-items: center; gap: 10px;
+            margin-bottom: 22px;
+        }
+        .progress-bar {
+            flex: 1; height: 4px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%; width: 0%;
+            background: linear-gradient(90deg, var(--accent-dim), var(--accent));
+            border-radius: 2px;
+            transition: width 0.5s ease;
+        }
+        .progress-text {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        /* 단계별 애니메이션 */
+        .step { display: none; }
+        .step.active { display: block; animation: slideIn 0.4s ease-out; }
+
+        h2 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #fff;
+            line-height: 1.4;
+        }
+
+        .btn-list { display: flex; flex-direction: column; gap: 10px; }
+        .btn-opt {
+            padding: 16px 18px;
+            border-radius: 14px;
+            border: 1px solid var(--glass-border);
+            background: rgba(255,255,255,0.03);
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-opt:hover {
+            border-color: rgba(45, 212, 168, 0.3);
+            background: rgba(45, 212, 168, 0.06);
+        }
+        .btn-opt:active {
+            background: rgba(45, 212, 168, 0.15);
+            border-color: var(--accent);
+            transform: scale(0.98);
+        }
+
+        /* 결과 */
+        #result-box { display: none; text-align: center; }
+        .result-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+        .price-tag {
+            font-size: 2.6rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--point) 0%, #f5d76e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 12px 0;
+        }
+        .result-range {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+        .result-detail {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 16px;
+            text-align: left;
+        }
+        .result-detail h3 {
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .result-detail li {
+            font-size: 0.83rem;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+            list-style: none;
+            padding-left: 16px;
+            position: relative;
+        }
+        .result-detail li::before {
+            content: '·';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        /* CTA 버튼 */
+        .cta-btn {
+            display: block; width: 100%;
+            padding: 16px;
+            border: none; border-radius: 14px;
+            background: linear-gradient(135deg, var(--accent-dim), var(--accent));
+            color: #061a14;
+            font-size: 1rem; font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s;
+            box-shadow: 0 4px 20px rgba(45, 212, 168, 0.25);
+        }
+        .cta-btn:active {
+            transform: scale(0.97);
+            box-shadow: 0 2px 10px rgba(45, 212, 168, 0.2);
+        }
+        .cta-sub {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        /* 결과 하단 신뢰배지 */
+        .result-trust {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .result-trust span {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .result-trust .dot {
+            width: 6px; height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            opacity: 0.6;
+        }
+
+        /* 하단 독 바 */
+        .dock-bar {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background: rgba(6, 26, 20, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            display: flex;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            z-index: 1000;
+        }
+        .dock-item {
+            flex: 1; text-align: center; padding: 12px 0 14px;
+            color: var(--text-muted);
+            text-decoration: none; font-size: 0.7rem;
+            display: flex; flex-direction: column;
+            align-items: center; gap: 4px;
+            transition: color 0.2s;
+        }
+        .dock-item.active { color: var(--accent); }
+        .dock-item svg { width: 20px; height: 20px; }
+
+        /* FAQ */
+        .section-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 16px;
+            padding-left: 2px;
+        }
+        .faq-box {
+            background: rgba(0,0,0,0.15);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            padding: 16px 18px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .faq-box:hover { border-color: rgba(45,212,168,0.15); }
+        .faq-q {
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 0.88rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .faq-q::after {
+            content: '+';
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            transition: transform 0.3s;
+        }
+        .faq-box.open .faq-q::after { content: '−'; }
+        .faq-a {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            margin-top: 10px;
+            line-height: 1.6;
+            display: none;
+        }
+        .faq-box.open .faq-a { display: block; animation: fadeIn 0.3s ease; }
+
+        /* 팝업 */
+        #modal-overlay {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(4px);
+            display: none; z-index: 2000;
+        }
+        #modal {
+            position: fixed; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 88%; max-width: 380px;
+            background: linear-gradient(160deg, #0f2e24, #0b2219);
+            border: 1px solid rgba(45,212,168,0.15);
+            color: var(--text-primary);
+            border-radius: 20px;
+            padding: 32px 24px;
+            display: none; z-index: 2001;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+        #modal h3 {
+            font-size: 1.15rem; font-weight: 700;
+            margin-bottom: 10px;
+        }
+        #modal p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        .modal-close {
+            position: absolute; top: 14px; right: 16px;
+            background: none; border: none;
+            color: var(--text-muted); font-size: 1.3rem;
+            cursor: pointer;
+        }
+
+        /* 디스클레이머 */
+        .disclaimer {
+            text-align: center;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 30px;
+            padding: 0 10px;
+            line-height: 1.6;
+            opacity: 0.7;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(18px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
     </style>
 </head>
 <body>
 
+<div class="container">
     <header>
-        <div class="nav-container">
-            <div class="logo">법률가이드</div>
-            <div class="nav-links">
-                <a href="#calculator">위자료 계산기</a>
-                <a href="#info">핵심 정보</a>
-                <a href="#faq">자주 하는 질문</a>
-            </div>
+        <div class="logo">Heart Test</div>
+        <h1 class="header-title">상간자 위자료,<br><em>얼마나 받을 수 있을까?</em></h1>
+        <p class="header-sub">1분 익명 진단으로 예상 금액과<br>승소 가능성을 확인하세요</p>
+
+        <div class="trust-badges">
+            <div class="trust-badge"><span class="check"></span>최신 판례 기준 적용</div>
+            <div class="trust-badge"><span class="check"></span>개인정보 절대 보호</div>
+            <div class="trust-badge"><span class="check"></span>100% 익명 진단</div>
         </div>
     </header>
 
-    <section class="hero">
-        <p>누구에게도 말하지 못했던 고통, 이제는 끝내야 할 때입니다.</p>
-        <h1>배신감에 무너진 당신의 일상,<br>정당한 권리로 되찾아 드립니다.</h1>
-        <p>막막하고 두려운 상간 위자료 소송. 정확한 위자료 진단부터 합법적 증거 수집까지.</p>
-        <button class="btn-primary" onclick="document.getElementById('calculator').scrollIntoView({behavior: 'smooth'});">⏱️ 내 예상 위자료 계산해 보기 (1분 소요)</button>
-    </section>
+    <section class="card" id="main-card">
+        <div class="progress-wrap">
+            <div class="progress-bar"><div class="progress-fill" id="pbar"></div></div>
+            <span class="progress-text" id="ptext">1 / 5</span>
+        </div>
 
-    <section id="calculator">
-        <h2>💡 상간 위자료 자가 진단 계산기</h2>
-        <div class="calculator-box">
-            <p style="color: #718096; font-size: 0.9rem; margin-bottom: 20px;">* 본 테스트는 실제 법원 판례의 평균적인 기준을 바탕으로 제작되었습니다. 참고용으로만 활용해 주세요.</p>
-            
-            <div class="question">
-                <p>1. 두 사람의 부정행위(외도) 기간은 어느 정도인가요?</p>
-                <label><input type="radio" name="q1" value="0"> 6개월 미만</label>
-                <label><input type="radio" name="q1" value="200"> 6개월 ~ 1년</label>
-                <label><input type="radio" name="q1" value="500"> 1년 ~ 3년</label>
-                <label><input type="radio" name="q1" value="1000"> 3년 이상</label>
+        <div id="q-steps">
+            <!-- Step 1 -->
+            <div class="step active" data-s="1">
+                <h2>부정행위 기간은<br>어느 정도인가요?</h2>
+                <div class="btn-list">
+                    <button class="btn-opt" onclick="next(1,'6개월 미만',1)">6개월 미만</button>
+                    <button class="btn-opt" onclick="next(1,'6개월~1년',2)">6개월 ~ 1년</button>
+                    <button class="btn-opt" onclick="next(1,'1년~3년',3)">1년 ~ 3년</button>
+                    <button class="btn-opt" onclick="next(1,'3년 이상',4)">3년 이상</button>
+                </div>
             </div>
 
-            <div class="question">
-                <p>2. 두 사람의 부정행위 정도는 어떠한가요?</p>
-                <label><input type="radio" name="q2" value="0"> 단순 연락 및 데이트 정황</label>
-                <label><input type="radio" name="q2" value="300"> 숙박업소 출입 등 깊은 관계</label>
-                <label><input type="radio" name="q2" value="1500"> 동거 또는 혼외자 출산</label>
+            <!-- Step 2 -->
+            <div class="step" data-s="2">
+                <h2>확보한 증거가<br>있으신가요?</h2>
+                <div class="btn-list">
+                    <button class="btn-opt" onclick="next(2,'사진/영상',4)">사진 또는 영상 증거</button>
+                    <button class="btn-opt" onclick="next(2,'메시지/통화',3)">메시지 / 통화 기록</button>
+                    <button class="btn-opt" onclick="next(2,'목격자 진술',2)">목격자 진술</button>
+                    <button class="btn-opt" onclick="next(2,'증거 없음',1)">아직 증거 없음</button>
+                </div>
             </div>
 
-            <div class="question">
-                <p>3. 상간자는 배우자가 '기혼자'임을 알고 있었나요?</p>
-                <label><input type="radio" name="q3" value="know"> 명확히 알고 만났다 (증거 있음)</label>
-                <label><input type="radio" name="q3" value="unknow"> 끝까지 기혼자인 줄 몰랐다고 주장하며, 반박할 증거가 없다</label>
+            <!-- Step 3 -->
+            <div class="step" data-s="3">
+                <h2>혼인 기간은<br>어느 정도인가요?</h2>
+                <div class="btn-list">
+                    <button class="btn-opt" onclick="next(3,'3년 미만',1)">3년 미만</button>
+                    <button class="btn-opt" onclick="next(3,'3~10년',2)">3년 ~ 10년</button>
+                    <button class="btn-opt" onclick="next(3,'10~20년',3)">10년 ~ 20년</button>
+                    <button class="btn-opt" onclick="next(3,'20년 이상',4)">20년 이상</button>
+                </div>
             </div>
 
-            <button class="btn-primary" onclick="calculateAmount()">결과 확인하기</button>
-            
-            <div id="calc-result"></div>
+            <!-- Step 4 -->
+            <div class="step" data-s="4">
+                <h2>미성년 자녀가<br>있으신가요?</h2>
+                <div class="btn-list">
+                    <button class="btn-opt" onclick="next(4,'없음',0)">없음</button>
+                    <button class="btn-opt" onclick="next(4,'1명',2)">1명</button>
+                    <button class="btn-opt" onclick="next(4,'2명 이상',3)">2명 이상</button>
+                </div>
+            </div>
+
+            <!-- Step 5 -->
+            <div class="step" data-s="5">
+                <h2>상간자가 부정행위<br>사실을 인정했나요?</h2>
+                <div class="btn-list">
+                    <button class="btn-opt" onclick="next(5,'인정함',3)">네, 인정했습니다</button>
+                    <button class="btn-opt" onclick="next(5,'부인함',1)">아니요, 부인합니다</button>
+                    <button class="btn-opt" onclick="next(5,'모름',0)">아직 모름 / 미확인</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="result-box">
+            <p class="result-label">귀하의 예상 위자료</p>
+            <div class="price-tag" id="price"></div>
+            <p class="result-range" id="range-text"></p>
+
+            <div class="result-detail">
+                <h3>진단 요약</h3>
+                <ul id="summary-list"></ul>
+            </div>
+
+            <div class="result-detail">
+                <h3>권장 증거 자료</h3>
+                <ul>
+                    <li>카카오톡 / 문자 대화 캡처</li>
+                    <li>통화 녹음 파일</li>
+                    <li>사진·영상 (장소·날짜 확인 가능)</li>
+                    <li>카드 결제·이체 내역</li>
+                    <li>목격자 진술서</li>
+                </ul>
+            </div>
+
+            <button class="cta-btn" onclick="openModal()">무료 법률 상담 신청하기</button>
+            <p class="cta-sub">상담 시 개인정보는 암호화되어 보호됩니다</p>
+
+            <div class="result-trust">
+                <span><span class="dot"></span>판례 기반 분석</span>
+                <span><span class="dot"></span>익명 보장</span>
+                <span><span class="dot"></span>비용 0원</span>
+            </div>
         </div>
     </section>
 
-    <section id="info">
-        <h2>📌 승소를 위한 핵심 가이드</h2>
-        
-        <h3 style="margin-top: 20px;">1. 위자료 증감 요인</h3>
-        <table>
-            <tr>
-                <th>금액이 높아지는 경우 (가중 요소)</th>
-                <th>금액이 낮아지는 경우 (감경 요소)</th>
-            </tr>
-            <tr>
-                <td>부정행위 기간이 길고 정도가 심할 때<br>상간자가 적반하장으로 나올 때</td>
-                <td>상간자가 진심으로 반성하고 사과할 때<br>소송 전 이미 혼인 관계가 파탄 났을 때</td>
-            </tr>
-        </table>
+    <!-- FAQ -->
+    <section id="faq-section" style="margin-top: 10px;">
+        <p class="section-title">자주 묻는 질문</p>
 
-        <h3 style="margin-top: 30px;">2. 절대 놓치면 안 되는 '소멸시효'</h3>
-        <p>다음 두 기간 중 하나라도 먼저 지나면 소송을 제기할 수 없습니다.</p>
-        <ul style="margin-left: 20px; margin-top: 10px;">
-            <li>상간 사실 및 상간자를 <strong>안 날로부터 3년</strong> 이내</li>
-            <li>부정행위가 <strong>있은 날로부터 10년</strong> 이내</li>
-        </ul>
+        <div class="faq-box" onclick="toggleFaq(this)">
+            <p class="faq-q">상간 위자료 소송의 소멸시효는?</p>
+            <div class="faq-a">부정행위 사실과 상대방을 안 날로부터 <strong>3년</strong>, 부정행위가 있었던 날로부터 <strong>10년</strong> 이내에 소송을 제기해야 합니다. 시효가 임박한 경우 즉시 전문가 상담을 받으시길 권합니다.</div>
+        </div>
+
+        <div class="faq-box" onclick="toggleFaq(this)">
+            <p class="faq-q">증거가 부족해도 소송이 가능한가요?</p>
+            <div class="faq-a">네, 가능합니다. 정황 증거(메시지, 카드 내역 등)를 종합하여 입증할 수 있으며, 변호사 조력을 통해 추가 증거 확보 전략을 세울 수 있습니다.</div>
+        </div>
+
+        <div class="faq-box" onclick="toggleFaq(this)">
+            <p class="faq-q">위자료 평균 금액은 얼마인가요?</p>
+            <div class="faq-a">최근 판례 기준 상간자 위자료는 <strong>1,000만 원 ~ 5,000만 원</strong> 사이에서 결정되는 경우가 많습니다. 혼인 기간, 자녀 유무, 증거 수준 등에 따라 달라집니다.</div>
+        </div>
+
+        <div class="faq-box" onclick="toggleFaq(this)">
+            <p class="faq-q">상담 내용이 외부에 공개되나요?</p>
+            <div class="faq-a">절대 공개되지 않습니다. 모든 상담은 <strong>비밀 보장</strong> 원칙 하에 진행되며, 본인 동의 없이는 어떠한 정보도 제3자에게 제공하지 않습니다.</div>
+        </div>
     </section>
 
-    <section id="faq">
-        <h2>💬 자주 하는 질문 (FAQ)</h2>
-        
-        <details>
-            <summary>배우자 몰래 핸드폰(카카오톡)을 본 것도 증거가 되나요?</summary>
-            <p>네, 증거로 활용될 수 있습니다. 다만, 비밀번호를 몰래 풀고 들어가는 행위는 정보통신망법 위반 소지가 있어 주의가 필요합니다. 화면을 내 폰으로 촬영해 두는 방식이 가장 일반적입니다.</p>
-        </details>
-        
-        <details>
-            <summary>이혼하지 않고 상간자에게만 소송할 수 있나요?</summary>
-            <p>네, 당연히 가능합니다. 이혼 소송과 상간자 위자료 청구 소송은 별개입니다. 가정을 지키면서 상간자에게만 법적 책임을 묻는 경우가 매우 많습니다.</p>
-        </details>
-        
-        <details>
-            <summary>흥신소나 심부름센터를 통해 수집한 증거도 쓸 수 있나요?</summary>
-            <p>불법적인 미행, 위치추적기 부착 등으로 수집된 증거는 재판에서 인정되지 않을 확률이 높으며, 오히려 역고소(통신비밀보호법 위반 등)를 당해 불리해질 수 있습니다. 절대 권장하지 않습니다.</p>
-        </details>
-        
-        </section>
+    <p class="disclaimer">본 진단 결과는 최근 판례를 기반으로 한 참고용 예측이며,<br>법적 효력을 갖지 않습니다. 정확한 판단은 법률 전문가 상담을 권장합니다.</p>
+</div>
 
-    <script>
-        // 위자료 계산 자바스크립트 로직
-        function calculateAmount() {
-            const q1 = document.querySelector('input[name="q1"]:checked');
-            const q2 = document.querySelector('input[name="q2"]:checked');
-            const q3 = document.querySelector('input[name="q3"]:checked');
-            const resultDiv = document.getElementById('calc-result');
+<!-- 하단 독 바 -->
+<nav class="dock-bar">
+    <a class="dock-item active" href="#" onclick="resetCalc(); return false;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6M9 13h4"/></svg>
+        <span>진단</span>
+    </a>
+    <a class="dock-item" href="#faq-section">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <span>FAQ</span>
+    </a>
+    <a class="dock-item" href="#" onclick="openModal(); return false;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 5.16 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.81.36 1.6.65 2.36a2 2 0 0 1-.45 2.11L8.09 9.41a16 16 0 0 0 6.5 6.5l1.22-1.22a2 2 0 0 1 2.11-.45c.76.29 1.55.52 2.36.65A2 2 0 0 1 22 16.92z"/></svg>
+        <span>상담</span>
+    </a>
+</nav>
 
-            if (!q1 || !q2 || !q3) {
-                alert("모든 질문에 답해주세요.");
-                return;
-            }
+<!-- 모달 -->
+<div id="modal-overlay" onclick="closeModal()"></div>
+<div id="modal">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <h3>무료 법률 상담 안내</h3>
+    <p>전문 변호사가 귀하의 상황을 분석하고<br>최적의 대응 전략을 안내해 드립니다.</p>
+    <a href="tel:010-0000-0000" class="cta-btn" style="text-decoration:none; display:block; margin-bottom:10px;">전화 상담 연결</a>
+    <p style="font-size:0.72rem; color:var(--text-muted);">평일 09:00 ~ 18:00 · 비밀 보장</p>
+</div>
 
-            // 기혼자인 줄 몰랐을 경우의 로직 (예외 처리)
-            if (q3.value === 'unknow') {
-                resultDiv.className = 'warning-result';
-                resultDiv.innerHTML = "⚠️ <strong>위자료 청구 기각 주의!</strong><br>상간자가 기혼자임을 몰랐다면 법적으로 위자료를 청구하기 매우 어렵습니다. 기혼자임을 알았다는 결정적 증거 확보가 최우선입니다.";
-                resultDiv.style.display = 'block';
-                return;
-            }
+<script>
+    const TOTAL = 5;
+    let scores = {};
+    let answers = {};
 
-            // 일반적인 금액 계산 (기본금 1500만 원)
-            let baseAmount = 1500;
-            let total = baseAmount + parseInt(q1.value) + parseInt(q2.value);
-            
-            // 최대 5000만원 제한
-            if (total > 5000) total = 5000;
+    function next(step, label, score) {
+        scores[step] = score;
+        answers[step] = label;
 
-            let minAmount = total - 300;
-            let maxAmount = total + 300;
+        const cur = document.querySelector('.step[data-s="'+step+'"]');
+        const nxt = document.querySelector('.step[data-s="'+(step+1)+'"]');
 
-            resultDiv.className = '';
-            resultDiv.innerHTML = `의뢰인님의 상황을 분석한 결과, 예상되는 상간 위자료 청구 가능 금액은<br><span style="color:#3182ce; font-size:1.5rem;">약 ${minAmount.toLocaleString()}만 원 ~ ${maxAmount.toLocaleString()}만 원</span> 선입니다.<br><br><span style="font-size:1rem; color:#4a5568;">단, 이 금액을 인정받기 위해서는 '명백한 증거'가 필수적입니다.</span>`;
-            resultDiv.style.display = 'block';
+        cur.classList.remove('active');
+
+        if (nxt) {
+            nxt.classList.add('active');
+            updateProgress(step + 1);
+        } else {
+            showResult();
         }
-    </script>
+    }
+
+    function updateProgress(s) {
+        const pct = Math.round((s / TOTAL) * 100);
+        document.getElementById('pbar').style.width = pct + '%';
+        document.getElementById('ptext').textContent = s + ' / ' + TOTAL;
+    }
+
+    function showResult() {
+        document.getElementById('q-steps').style.display = 'none';
+        document.querySelector('.progress-wrap').style.display = 'none';
+        document.getElementById('result-box').style.display = 'block';
+        document.getElementById('result-box').style.animation = 'slideIn 0.5s ease-out';
+
+        let total = 0;
+        for (let k in scores) total += scores[k];
+
+        let base, lo, hi;
+        if (total <= 5) {
+            base = 1500; lo = 800; hi = 2000;
+        } else if (total <= 9) {
+            base = 3000; lo = 2000; hi = 4000;
+        } else if (total <= 13) {
+            base = 4500; lo = 3500; hi = 5500;
+        } else {
+            base = 6000; lo = 5000; hi = 8000;
+        }
+
+        document.getElementById('price').textContent = base.toLocaleString() + '만 원';
+        document.getElementById('range-text').textContent = '예상 범위: ' + lo.toLocaleString() + '만 원 ~ ' + hi.toLocaleString() + '만 원';
+
+        const labels = {
+            1: '부정행위 기간',
+            2: '증거 수준',
+            3: '혼인 기간',
+            4: '미성년 자녀',
+            5: '상대방 인정 여부'
+        };
+
+        const ul = document.getElementById('summary-list');
+        ul.innerHTML = '';
+        for (let k in answers) {
+            const li = document.createElement('li');
+            li.textContent = labels[k] + ': ' + answers[k];
+            ul.appendChild(li);
+        }
+    }
+
+    function resetCalc() {
+        scores = {};
+        answers = {};
+        document.getElementById('q-steps').style.display = '';
+        document.querySelector('.progress-wrap').style.display = '';
+        document.getElementById('result-box').style.display = 'none';
+
+        document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+        document.querySelector('.step[data-s="1"]').classList.add('active');
+        updateProgress(1);
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function toggleFaq(el) {
+        el.classList.toggle('open');
+    }
+
+    function openModal() {
+        document.getElementById('modal-overlay').style.display = 'block';
+        document.getElementById('modal').style.display = 'block';
+    }
+
+    function closeModal() {
+        document.getElementById('modal-overlay').style.display = 'none';
+        document.getElementById('modal').style.display = 'none';
+    }
+
+    updateProgress(1);
+</script>
+
 </body>
 </html>
