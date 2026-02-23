@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>무료 위자료 진단 · 소멸시효 확인 | 법률사무소 합의</title>
+    <meta name="description" content="판례 기반 무료 위자료 진단과 소멸시효 한 번에 확인. 1분 만에 예상 금액과 소송 가능 여부를 진단합니다.">
+    <link rel="canonical" href="https://www.hearttest.xyz/diagnosis.html">
+    <meta name="robots" content="index, follow">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <style>
+        :root {
+            --bg: #050e0b;
+            --accent: #3be8b0;
+            --accent-sub: #1bbd8e;
+            --gold: #e8c44a;
+            --gold-sub: #f5d76e;
+            --warn: #e85d3b;
+            --safe: #3be87a;
+            --text-primary: #eaf6f1;
+            --text-secondary: #93b5a6;
+            --text-muted: #4d7565;
+            --border: rgba(255,255,255,0.06);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text-primary);
+            letter-spacing: -0.03em;
+            word-break: keep-all;
+            overflow-x: hidden;
+        }
+        .topnav {
+            position: fixed; top: 0; left: 0; width: 100%;
+            z-index: 1100;
+            background: rgba(5,14,11,0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+        .topnav-inner {
+            max-width: 520px; margin: 0 auto;
+            display: flex; align-items: center;
+            padding: 0 20px; height: 52px;
+        }
+        .topnav-brand {
+            font-size: 0.82rem; font-weight: 700;
+            color: var(--accent); text-decoration: none;
+            margin-right: auto;
+        }
+        .topnav-links { display: flex; gap: 4px; list-style: none; }
+        .topnav-links a {
+            text-decoration: none;
+            font-size: 0.7rem; font-weight: 600;
+            color: var(--text-muted);
+            padding: 6px 10px; border-radius: 8px;
+            white-space: nowrap;
+        }
+        .topnav-links a:hover, .topnav-links a.active { color: var(--text-primary); background: rgba(255,255,255,0.05); }
+        .topnav-cta {
+            margin-left: 8px;
+            padding: 6px 14px;
+            background: var(--accent);
+            color: #051a12;
+            font-size: 0.68rem; font-weight: 700;
+            border-radius: 8px;
+            text-decoration: none;
+        }
+        .page-head {
+            padding: 80px 20px 32px;
+            text-align: center;
+            max-width: 520px; margin: 0 auto;
+        }
+        .page-head .breadcrumb { font-size: 0.72rem; color: var(--text-muted); margin-bottom: 12px; }
+        .page-head .breadcrumb a { color: var(--accent); text-decoration: none; }
+        .page-head h1 {
+            font-size: clamp(1.5rem, 5vw, 2rem);
+            font-weight: 800;
+            line-height: 1.3;
+            margin-bottom: 8px;
+        }
+        .page-head h1 .em {
+            background: linear-gradient(135deg, var(--accent), var(--accent-sub));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .page-head p { font-size: 0.9rem; color: var(--text-secondary); }
+        .section { max-width: 520px; margin: 0 auto; padding: 0 20px; }
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border), transparent);
+            margin: 48px auto; max-width: 200px;
+        }
+        .sec-label {
+            font-size: 0.72rem; font-weight: 600;
+            color: var(--accent); letter-spacing: 0.1em;
+            text-transform: uppercase; margin-bottom: 10px;
+        }
+        .sec-title { font-size: 1.4rem; font-weight: 800; color: #fff; line-height: 1.4; }
+        .sec-head { text-align: center; margin-bottom: 28px; }
+
+        .calc-section { padding-top: 24px; padding-bottom: 40px; }
+        .calc-card {
+            background: linear-gradient(160deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+            border: 1px solid var(--border); border-radius: 24px;
+            padding: 28px 22px; position: relative; overflow: hidden;
+        }
+        .calc-card::before {
+            content: '';
+            position: absolute; top: -1px; left: 50%; transform: translateX(-50%);
+            width: 120px; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            opacity: 0.5;
+        }
+        .progress-wrap { display: flex; align-items: center; gap: 10px; margin-bottom: 24px; }
+        .progress-bar { flex: 1; height: 3px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden; }
+        .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent-sub), var(--accent)); border-radius: 2px; transition: width 0.5s ease; }
+        .progress-text { font-size: 0.7rem; color: var(--text-muted); font-weight: 500; white-space: nowrap; }
+        .step { display: none; }
+        .step.active { display: block; animation: stepIn 0.5s cubic-bezier(0.16,1,0.3,1); }
+        .step h2 { font-size: 1.15rem; font-weight: 700; text-align: center; color: #fff; line-height: 1.5; margin-bottom: 22px; }
+        .btn-list { display: flex; flex-direction: column; gap: 10px; }
+        .btn-opt {
+            padding: 16px 18px; border-radius: 14px;
+            border: 1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.02);
+            color: var(--text-primary); font-size: 0.92rem; font-weight: 500;
+            cursor: pointer; transition: all 0.25s; text-align: left;
+        }
+        .btn-opt:hover { border-color: rgba(59,232,176,0.25); background: rgba(59,232,176,0.04); }
+        .btn-opt:active { background: rgba(59,232,176,0.1); border-color: var(--accent); transform: scale(0.98); }
+
+        #result-box { display: none; text-align: center; }
+        .result-label { font-size: 0.8rem; color: var(--text-secondary); font-weight: 500; margin-bottom: 4px; }
+        .price-tag {
+            font-size: 2.8rem; font-weight: 900;
+            background: linear-gradient(135deg, var(--gold), var(--gold-sub));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 10px 0; letter-spacing: -0.02em;
+        }
+        .result-range { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 28px; }
+        .result-detail {
+            background: rgba(255,255,255,0.02); border: 1px solid var(--border);
+            border-radius: 16px; padding: 20px; margin-bottom: 14px; text-align: left;
+        }
+        .result-detail h3 { font-size: 0.8rem; color: var(--accent); font-weight: 700; margin-bottom: 12px; }
+        .result-detail li {
+            font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 7px;
+            list-style: none; padding-left: 14px; position: relative; line-height: 1.5;
+        }
+        .result-detail li::before {
+            content: ''; position: absolute; left: 0; top: 8px;
+            width: 4px; height: 4px; background: var(--accent); border-radius: 50%; opacity: 0.6;
+        }
+        .cta-primary {
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            width: 100%; padding: 17px; border: none; border-radius: 16px;
+            background: linear-gradient(135deg, var(--accent-sub), var(--accent));
+            color: #051a12; font-size: 1rem; font-weight: 700;
+            cursor: pointer; transition: all 0.25s;
+            box-shadow: 0 0 30px rgba(59,232,176,0.15);
+            text-decoration: none; margin-bottom: 10px;
+        }
+        .cta-primary svg { width: 20px; height: 20px; flex-shrink: 0; }
+        .cta-secondary {
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; padding: 15px;
+            border: 1px solid var(--border); border-radius: 16px;
+            background: rgba(255,255,255,0.02); color: var(--text-primary);
+            font-size: 0.92rem; font-weight: 600;
+            cursor: pointer; transition: all 0.25s; text-decoration: none;
+            font-family: inherit;
+        }
+        .result-badges { display: flex; justify-content: center; gap: 18px; margin-top: 22px; flex-wrap: wrap; }
+        .result-badges span { font-size: 0.7rem; color: var(--text-muted); }
+
+        .sol-section { padding: 40px 0 60px; }
+        .sol-card {
+            background: linear-gradient(160deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+            border: 1px solid var(--border); border-radius: 24px;
+            padding: 28px 22px; position: relative; overflow: hidden;
+        }
+        .sol-card::before {
+            content: '';
+            position: absolute; top: -1px; left: 50%; transform: translateX(-50%);
+            width: 120px; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--warn), transparent);
+            opacity: 0.4;
+        }
+        .sol-field { margin-bottom: 18px; }
+        .sol-field label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px; }
+        .sol-field input {
+            width: 100%; padding: 14px 16px;
+            background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+            border-radius: 12px; color: var(--text-primary); font-size: 0.9rem;
+            font-family: inherit; outline: none; transition: border-color 0.2s;
+        }
+        .sol-field input:focus { border-color: rgba(59,232,176,0.3); }
+        .sol-field .hint { font-size: 0.7rem; color: var(--text-muted); margin-top: 6px; }
+        .sol-btn {
+            width: 100%; padding: 15px;
+            background: rgba(232,93,59,0.15); border: 1px solid rgba(232,93,59,0.2);
+            border-radius: 14px; color: var(--warn);
+            font-size: 0.95rem; font-weight: 700; cursor: pointer;
+            transition: all 0.2s; font-family: inherit;
+        }
+        .sol-result {
+            margin-top: 20px; padding: 20px;
+            border-radius: 16px; display: none; text-align: center;
+            animation: stepIn 0.4s ease;
+        }
+        .sol-result.safe { background: rgba(59,232,122,0.08); border: 1px solid rgba(59,232,122,0.15); }
+        .sol-result.danger { background: rgba(232,93,59,0.08); border: 1px solid rgba(232,93,59,0.15); }
+        .sol-result .status { font-size: 1.2rem; font-weight: 800; margin-bottom: 6px; }
+        .sol-result.safe .status { color: var(--safe); }
+        .sol-result.danger .status { color: var(--warn); }
+        .sol-result .detail { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6; }
+        .sol-result .days { font-weight: 700; }
+
+        .bottom-cta { text-align: center; padding: 40px 0 60px; }
+        .bottom-cta h2 { font-size: 1.3rem; font-weight: 800; color: #fff; line-height: 1.4; margin-bottom: 12px; }
+        .bottom-cta p { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 24px; }
+
+        .footer { text-align: center; padding: 30px 20px 120px; border-top: 1px solid var(--border); }
+        .footer-brand { font-size: 0.9rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 6px; }
+        .footer-sub { font-size: 0.72rem; color: var(--text-muted); margin-bottom: 6px; }
+        .footer-lawyer { font-size: 0.75rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 4px; }
+        .footer-address { font-size: 0.7rem; color: var(--text-muted); margin-bottom: 12px; }
+        .footer p { font-size: 0.65rem; color: var(--text-muted); line-height: 1.7; }
+
+        .dock {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background: rgba(5,14,11,0.92); backdrop-filter: blur(24px);
+            border-top: 1px solid var(--border); z-index: 1000;
+            padding: 0 0 env(safe-area-inset-bottom);
+        }
+        .dock-inner { max-width: 520px; margin: 0 auto; display: flex; }
+        .dock-item {
+            flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px;
+            padding: 10px 0 12px; text-decoration: none;
+            color: var(--text-muted); font-size: 0.63rem; font-weight: 500;
+        }
+        .dock-item.active { color: var(--accent); }
+        .dock-item svg { width: 19px; height: 19px; }
+
+        @keyframes stepIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+<header class="topnav">
+    <div class="topnav-inner">
+        <a href="index.html" class="topnav-brand">법률사무소 합의</a>
+        <nav class="topnav-links">
+            <a href="cases.html">성공사례</a>
+            <a href="diagnosis.html" class="active">진단</a>
+            <a href="diagnosis.html#sol">시효확인</a>
+            <a href="faq.html">Q&A</a>
+        </nav>
+        <a href="http://pf.kakao.com/_prFQG/chat" target="_blank" rel="noopener" class="topnav-cta">상담신청</a>
+    </div>
+</header>
+
+<div class="page-head">
+    <p class="breadcrumb"><a href="index.html">홈</a> &gt; 무료 진단</p>
+    <h1>위자료 진단 &amp; <span class="em">소멸시효 확인</span></h1>
+    <p>예상 위자료와 소송 가능 여부를 한 페이지에서 확인하세요</p>
+</div>
+
+<div class="section" id="calc">
+    <section class="calc-section" aria-label="위자료 무료 진단">
+        <div class="sec-head">
+            <p class="sec-label">STEP 1</p>
+            <h2 class="sec-title">나의 예상 위자료</h2>
+        </div>
+        <div class="calc-card">
+            <div class="progress-wrap" id="progress-wrap">
+                <div class="progress-bar"><div class="progress-fill" id="pbar"></div></div>
+                <span class="progress-text" id="ptext">1 / 5</span>
+            </div>
+            <div id="q-steps">
+                <div class="step active" data-s="1">
+                    <h2>부정행위 기간은 어느 정도인가요?</h2>
+                    <div class="btn-list">
+                        <button class="btn-opt" onclick="next(1,'6개월 미만',1)">6개월 미만</button>
+                        <button class="btn-opt" onclick="next(1,'6개월~1년',2)">6개월 ~ 1년</button>
+                        <button class="btn-opt" onclick="next(1,'1년~3년',3)">1년 ~ 3년</button>
+                        <button class="btn-opt" onclick="next(1,'3년 이상',4)">3년 이상</button>
+                    </div>
+                </div>
+                <div class="step" data-s="2">
+                    <h2>확보한 증거가 있으신가요?</h2>
+                    <div class="btn-list">
+                        <button class="btn-opt" onclick="next(2,'사진/영상',4)">사진 또는 영상 증거</button>
+                        <button class="btn-opt" onclick="next(2,'메시지/통화',3)">메시지 / 통화 기록</button>
+                        <button class="btn-opt" onclick="next(2,'목격자 진술',2)">목격자 진술</button>
+                        <button class="btn-opt" onclick="next(2,'증거 없음',1)">아직 증거 없음</button>
+                    </div>
+                </div>
+                <div class="step" data-s="3">
+                    <h2>혼인 기간은 어느 정도인가요?</h2>
+                    <div class="btn-list">
+                        <button class="btn-opt" onclick="next(3,'3년 미만',1)">3년 미만</button>
+                        <button class="btn-opt" onclick="next(3,'3~10년',2)">3년 ~ 10년</button>
+                        <button class="btn-opt" onclick="next(3,'10~20년',3)">10년 ~ 20년</button>
+                        <button class="btn-opt" onclick="next(3,'20년 이상',4)">20년 이상</button>
+                    </div>
+                </div>
+                <div class="step" data-s="4">
+                    <h2>미성년 자녀가 있으신가요?</h2>
+                    <div class="btn-list">
+                        <button class="btn-opt" onclick="next(4,'없음',0)">없음</button>
+                        <button class="btn-opt" onclick="next(4,'1명',2)">1명</button>
+                        <button class="btn-opt" onclick="next(4,'2명 이상',3)">2명 이상</button>
+                    </div>
+                </div>
+                <div class="step" data-s="5">
+                    <h2>상간자가 부정행위 사실을 인정했나요?</h2>
+                    <div class="btn-list">
+                        <button class="btn-opt" onclick="next(5,'인정함',3)">네, 인정했습니다</button>
+                        <button class="btn-opt" onclick="next(5,'부인함',1)">아니요, 부인합니다</button>
+                        <button class="btn-opt" onclick="next(5,'모름',0)">아직 모름 / 미확인</button>
+                    </div>
+                </div>
+            </div>
+            <div id="result-box">
+                <p class="result-label">귀하의 예상 위자료</p>
+                <div class="price-tag" id="price"></div>
+                <p class="result-range" id="range-text"></p>
+                <div class="result-detail"><h3>진단 요약</h3><ul id="summary-list"></ul></div>
+                <div class="result-detail">
+                    <h3>권장 증거 자료</h3>
+                    <ul>
+                        <li>카카오톡 / 문자 대화 캡처</li>
+                        <li>통화 녹음 파일</li>
+                        <li>사진·영상 (장소·날짜 확인 가능)</li>
+                        <li>카드 결제·이체 내역</li>
+                        <li>목격자 진술서</li>
+                    </ul>
+                </div>
+                <a href="http://pf.kakao.com/_prFQG/chat" target="_blank" rel="noopener" class="cta-primary">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.5 3 2 6.58 2 11c0 2.83 1.88 5.29 4.71 6.71-.16.57-.58 2.09-.67 2.41-.1.41.15.4.32.29.13-.09 2.04-1.38 2.86-1.94.58.09 1.18.13 1.78.13 5.5 0 10-3.58 10-8s-4.5-8-10-8z"/></svg>
+                    카카오톡 법률 상담 신청 (3만원)
+                </a>
+                <button class="cta-secondary" onclick="resetCalc()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+                    다시 진단하기
+                </button>
+                <div class="result-badges">
+                    <span>&#x2713; 판례 기반 분석</span>
+                    <span>&#x2713; 익명 보장</span>
+                    <span>&#x2713; 진단 무료</span>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div class="divider"></div>
+
+<div class="section" id="sol">
+    <section class="sol-section" aria-label="소멸시효 확인">
+        <div class="sec-head">
+            <p class="sec-label">STEP 2</p>
+            <h2 class="sec-title">소멸시효,<br>아직 소송 가능한가요?</h2>
+        </div>
+        <div class="sol-card">
+            <div class="sol-field">
+                <label for="date-known">부정행위 사실을 알게 된 날짜</label>
+                <input type="date" id="date-known">
+                <p class="hint">상간자와 부정행위 사실을 처음 인지한 날</p>
+            </div>
+            <div class="sol-field">
+                <label for="date-affair">부정행위가 발생한 날짜 (대략)</label>
+                <input type="date" id="date-affair">
+                <p class="hint">부정행위가 시작된 시점 또는 가장 최근 발생일</p>
+            </div>
+            <button class="sol-btn" onclick="checkSOL()">소멸시효 확인하기</button>
+            <div class="sol-result" id="sol-result">
+                <p class="status" id="sol-status"></p>
+                <p class="detail" id="sol-detail"></p>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div class="section">
+    <section class="bottom-cta">
+        <h2>전문 변호사와 상담해 보세요</h2>
+        <p>진단 결과를 바탕으로 비밀 보장 법률 상담을 받을 수 있습니다</p>
+        <a href="http://pf.kakao.com/_prFQG/chat" target="_blank" rel="noopener" class="cta-primary">
+            <svg viewBox="0 0 24 24" fill="currentColor" style="width:20px;height:20px"><path d="M12 3C6.5 3 2 6.58 2 11c0 2.83 1.88 5.29 4.71 6.71-.16.57-.58 2.09-.67 2.41-.1.41.15.4.32.29.13-.09 2.04-1.38 2.86-1.94.58.09 1.18.13 1.78.13 5.5 0 10-3.58 10-8s-4.5-8-10-8z"/></svg>
+            카카오톡 법률 상담 신청 (3만원)
+        </a>
+    </section>
+</div>
+
+<footer class="footer">
+    <p class="footer-brand">법률사무소 합의</p>
+    <p class="footer-sub">상간·불륜 소송 전문 법률사무소</p>
+    <p class="footer-lawyer">광고책임변호사 정지은</p>
+    <p class="footer-address">수원시 영통구 광교중앙로 248번길 7-2, c동 602호</p>
+    <p>
+        본 진단 결과는 참고용이며 법적 효력을 갖지 않습니다.<br>
+        <a href="sitemap.html" style="color:var(--text-muted);">사이트맵</a><br><br>
+        &copy; 법률사무소 합의. All rights reserved.
+    </p>
+</footer>
+
+<nav class="dock" aria-label="하단 네비게이션">
+    <div class="dock-inner">
+        <a class="dock-item" href="index.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            <span>홈</span>
+        </a>
+        <a class="dock-item active" href="diagnosis.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="10" y2="10"/><line x1="14" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="10" y2="14"/><line x1="14" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="16" y2="18"/></svg>
+            <span>진단</span>
+        </a>
+        <a class="dock-item" href="diagnosis.html#sol">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>시효확인</span>
+        </a>
+        <a class="dock-item" href="faq.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span>Q&A</span>
+        </a>
+        <a class="dock-item" href="http://pf.kakao.com/_prFQG/chat" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            <span>상담</span>
+        </a>
+    </div>
+</nav>
+
+<script>
+    const TOTAL = 5;
+    let scores = {}, answers = {};
+
+    function next(step, label, score) {
+        scores[step] = score;
+        answers[step] = label;
+        const cur = document.querySelector('.step[data-s="'+step+'"]');
+        const nxt = document.querySelector('.step[data-s="'+(step+1)+'"]');
+        cur.classList.remove('active');
+        if (nxt) { nxt.classList.add('active'); updateProgress(step + 1); }
+        else { showResult(); }
+    }
+
+    function updateProgress(s) {
+        document.getElementById('pbar').style.width = Math.round((s / TOTAL) * 100) + '%';
+        document.getElementById('ptext').textContent = s + ' / ' + TOTAL;
+    }
+
+    function showResult() {
+        document.getElementById('q-steps').style.display = 'none';
+        document.getElementById('progress-wrap').style.display = 'none';
+        const rb = document.getElementById('result-box');
+        rb.style.display = 'block';
+
+        let total = 0;
+        for (let k in scores) total += scores[k];
+
+        let base, lo, hi;
+        if (total <= 5) { base = 1500; lo = 800; hi = 2000; }
+        else if (total <= 9) { base = 3000; lo = 2000; hi = 4000; }
+        else if (total <= 13) { base = 4500; lo = 3500; hi = 5500; }
+        else { base = 6000; lo = 5000; hi = 8000; }
+
+        document.getElementById('price').textContent = base.toLocaleString() + '만 원';
+        document.getElementById('range-text').textContent = '예상 범위 ' + lo.toLocaleString() + '만 원 ~ ' + hi.toLocaleString() + '만 원';
+
+        const labels = { 1:'부정행위 기간', 2:'증거 수준', 3:'혼인 기간', 4:'미성년 자녀', 5:'상대방 인정 여부' };
+        const ul = document.getElementById('summary-list');
+        ul.innerHTML = '';
+        for (let k in answers) {
+            const li = document.createElement('li');
+            li.textContent = labels[k] + ': ' + answers[k];
+            ul.appendChild(li);
+        }
+    }
+
+    function resetCalc() {
+        scores = {}; answers = {};
+        document.getElementById('q-steps').style.display = '';
+        document.getElementById('progress-wrap').style.display = '';
+        document.getElementById('result-box').style.display = 'none';
+        document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+        document.querySelector('.step[data-s="1"]').classList.add('active');
+        updateProgress(1);
+        document.getElementById('calc').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function checkSOL() {
+        const knownEl = document.getElementById('date-known');
+        const affairEl = document.getElementById('date-affair');
+        if (!knownEl.value || !affairEl.value) {
+            alert('두 날짜를 모두 입력해 주세요.');
+            return;
+        }
+        const today = new Date();
+        const known = new Date(knownEl.value);
+        const affair = new Date(affairEl.value);
+        const shortDeadline = new Date(known);
+        shortDeadline.setFullYear(shortDeadline.getFullYear() + 3);
+        const longDeadline = new Date(affair);
+        longDeadline.setFullYear(longDeadline.getFullYear() + 10);
+        const daysLeft = Math.ceil((Math.min(shortDeadline, longDeadline) - today) / (1000 * 60 * 60 * 24));
+        const resultEl = document.getElementById('sol-result');
+        const statusEl = document.getElementById('sol-status');
+        const detailEl = document.getElementById('sol-detail');
+        resultEl.style.display = 'block';
+        resultEl.className = 'sol-result ' + (daysLeft > 0 ? 'safe' : 'danger');
+        if (daysLeft > 0) {
+            statusEl.textContent = '소송 가능합니다';
+            const shortDays = Math.ceil((shortDeadline - today) / (1000*60*60*24));
+            const longDays = Math.ceil((longDeadline - today) / (1000*60*60*24));
+            detailEl.innerHTML = '단기 소멸시효(3년) 만료까지 <span class="days">' + Math.max(shortDays,0).toLocaleString() + '일</span> 남음<br>장기 소멸시효(10년) 만료까지 <span class="days">' + Math.max(longDays,0).toLocaleString() + '일</span> 남음<br><br>시효가 지나면 소송 제기가 불가능합니다. 가능한 빨리 전문가 상담을 받으시길 권합니다.';
+        } else {
+            statusEl.textContent = '소멸시효가 만료되었을 수 있습니다';
+            detailEl.innerHTML = '입력하신 날짜 기준, 소멸시효가 경과한 것으로 보입니다.<br><br>다만, <strong>부정행위가 지속 중</strong>이거나 <strong>최근 새로운 사실을 알게 된 경우</strong> 시효가 달리 적용될 수 있습니다. 정확한 판단을 위해 반드시 전문가 상담을 받으시기 바랍니다.';
+        }
+    }
+
+    updateProgress(1);
+</script>
+
+</body>
+</html>
